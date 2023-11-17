@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { lazy, Suspense } from 'react'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+
+const About = lazy(() => import('./components/About'))
+const Contact = lazy(() => import('./components/Contact'))
+const Home = lazy(() => import('./components/Home'))
+const Navbar = lazy(() => import('./components/Navbar'))
+
+const App = () => {
+	return (
+		<div>
+			<BrowserRouter>
+				<Suspense fallback={<p>Loading...</p>}>
+					<Navbar />
+					<Routes>
+						<Route path='/' element={<Home />} />
+						<Route path='/about' element={<About />} />
+						<Route path='/contact' element={<Contact />} />
+					</Routes>
+				</Suspense>
+			</BrowserRouter>
+		</div>
+	)
 }
 
-export default App;
+export default App
